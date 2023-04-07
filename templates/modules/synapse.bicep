@@ -4,8 +4,10 @@ targetScope = 'resourceGroup'
 
 // Parameters
 
-param pSynapseWorkspaceName string
+param pWorkspaceName string
 param pLocation string
+param pStorageUrl string
+param pFileSystemName string
 
 // Variables
 
@@ -14,8 +16,17 @@ param pLocation string
 // Resources
 
 resource synapseWorkspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
-  name: pSynapseWorkspaceName
+  name: pWorkspaceName
   location: pLocation
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    defaultDataLakeStorage: {
+      accountUrl: pStorageUrl
+      filesystem: pFileSystemName
+    }
+  }
 }
 
 // Outputs
