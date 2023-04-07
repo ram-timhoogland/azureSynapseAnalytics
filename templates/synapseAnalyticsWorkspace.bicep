@@ -38,6 +38,7 @@ module synapseWorkspace 'modules/synapse.bicep' = {
   params: {
     pLocation: pLocation
     pWorkspaceName: '${pCustomerCode}-syn-${pResourceName}-${pEnvironment}-${pLocation}'
+    pManagedResourceGroupName: '${pCustomerCode}-rg-${pResourceName}-managed-${pEnvironment}-${substring(pLocation, 0, 6)}'
     pStorageUrl: synapseStorage.outputs.oStorageUrl
     pFileSystemName: 'fileSystem'
   }
