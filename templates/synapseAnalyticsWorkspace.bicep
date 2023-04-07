@@ -32,7 +32,7 @@ module synapseStorage 'modules/storage.bicep' = {
   }
 }
 
-module synapseWorkspace 'modules/synapse.bicep' = {
+module synapseWorkspace 'modules/workspace.bicep' = {
   scope: synapseResourceGroup
   name: 'deploy_synapse_workspace_${vDeploymentId}'
   params: {
