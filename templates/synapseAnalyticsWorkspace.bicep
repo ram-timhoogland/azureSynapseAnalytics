@@ -13,11 +13,12 @@ param pEnvironment string
 // Variables
 
 var vDeploymentId = substring(uniqueString('${pDateTime}'), 0, 8)
+var vLocationAffix = substring(pLocation, 0, 6)
 
 // Resource Groups
 
 resource synapseResourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: '${pCustomerCode}-rg-${pResourceName}-${pEnvironment}-${substring(pLocation, 0, 6)}'
+  name: '${pCustomerCode}-rg-${pResourceName}-${pEnvironment}-${vLocationAffix}'
   location: pLocation
 }
 
@@ -28,7 +29,7 @@ module synapseStorage 'modules/storage.bicep' = {
   name: 'deploy_synapse_storage_${vDeploymentId}'
   params: {
     pLocation: pLocation
-    pStorageAccountName: '${pCustomerCode}st${uniqueString(pResourceName, substring(pLocation, 0, 6))}${pEnvironment}'
+    pStorageAccountName: '${pCustomerCode}st${uniqueString(pResourceName, vLocationAffix)}${pEnvironment}'
   }
 }
 
@@ -38,7 +39,7 @@ module synapseWorkspace 'modules/workspace.bicep' = {
   params: {
     pLocation: pLocation
     pWorkspaceName: '${pCustomerCode}-syn-${pResourceName}-${pEnvironment}-${pLocation}'
-    pManagedResourceGroupName: '${pCustomerCode}-rg-${pResourceName}-managed-${pEnvironment}-${substring(pLocation, 0, 6)}'
+    pManagedResourceGroupName: '${pCustomerCode}-rg-${pResourceName}-managed-${vLocationAffix}-${pEnvironment}'
     pStorageUrl: synapseStorage.outputs.oStorageUrl
     pFileSystemName: 'fileSystem'
   }
