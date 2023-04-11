@@ -18,7 +18,7 @@ var vLocationAffix = substring(pLocation, 0, 6)
 // Resource Groups
 
 resource synapseResourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: '${pCustomerCode}-rg-${pResourceName}-${pEnvironment}-${vLocationAffix}'
+  name: '${pCustomerCode}-rg-${pResourceName}-${vLocationAffix}-${pEnvironment}'
   location: pLocation
 }
 
